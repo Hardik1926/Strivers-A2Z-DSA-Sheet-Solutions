@@ -8,6 +8,7 @@ Return k.
 */ 
 
 import java.util.Scanner;
+import java.util.Stack;
 
 public class easy04 {
 
@@ -26,8 +27,8 @@ public class easy04 {
             nums[i] = x ;
         }
         scan.close();
-
-        System.out.println("The No of unique elements: "+rm_dups(nums));
+ 
+        System.out.println("The No of unique elements: "+(rm_dups(nums)+1));
         System.out.print("[");
         for(int i = 0; i < nums.length;i++){
             System.out.print(nums[i]);
@@ -39,20 +40,23 @@ public class easy04 {
     }   
 
     static int rm_dups(int[] nums){
-        int[] temp = nums.clone();        
+        Stack<Integer> temp = new Stack<Integer>();
+        int k = 0;       
         for(int i = 1; i < nums.length;i++){
-            if(nums[i] == nums[i-1]){
-                temp[i] = 2147483647;
-            }
-        }
-
-        int k = 0;
-        for(int num : temp){
-            if(num != 2147483647){
-                nums[k] = num;
+            if(nums[i] != nums[i-1]){
+                temp.push(nums[i]);
                 k++;
             }
         }
+        int r = k;
+
+        for(int i = 1; i < nums.length;i++){
+            if(!temp.empty())
+                {
+                nums[r] = temp.pop();
+                r--;
+            }
+        } 
         return k;  
     }
 }
