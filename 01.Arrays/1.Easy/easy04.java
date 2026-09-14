@@ -30,11 +30,10 @@ public class easy04 {
             }
         }
 
-        int[] newnums = new int[nums.length];
         int j = 0;
         for(int num : temp){
             if(num != 2147483647){
-                newnums[j] = num;
+                nums[j] = num;
                 j++;
                 count++;
             }
@@ -44,14 +43,13 @@ public class easy04 {
         System.out.println();
 
         System.out.print("[");
-        for(int i = 0; i < newnums.length;i++){
-            if(i == newnums.length - 1 ){
-                break;
-            }
-            
-            System.out.print(newnums[i] + ",");
+        for(int i = 0; i < nums.length;i++){
+            System.out.print(nums[i]);
+            if(i < nums.length - 1 ){
+                System.out.print(",");
+            }    
         }    
-        System.out.println("]");   
+        System.out.print("]");   
     }
 }
 
