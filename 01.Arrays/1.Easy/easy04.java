@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-//! Not Complete
-
 public class easy04 {
 
     public static void main(String[] args) {
@@ -19,12 +17,40 @@ public class easy04 {
             nums[i] = x ;
         }
         scan.close();
+
+        rm_dups(nums);
     }   
 
-    static void Arr(){
-        
+    static void rm_dups(int[] nums){
+        int count = 0;
+        int[] temp = nums.clone();        
+        for(int i = 1; i < nums.length;i++){
+            if(nums[i] == nums[i-1]){
+                temp[i] = 2147483647;
+            }
+        }
+
+        int[] newnums = new int[nums.length];
+        int j = 0;
+        for(int num : temp){
+            if(num != 2147483647){
+                newnums[j] = num;
+                j++;
+            }
+        }
+
+        System.out.printf("No of Unique elements: %d",nums.length - count);
+        System.out.println();
+
+        System.out.print("[");
+        for(int i = 0; i < newnums.length;i++){
+            System.out.print(newnums[i] + ",");
+
+            if(i == newnums.length - 1 ){
+                break;
+            }
+        }    
+        System.out.println("]");   
     }
 }
 
-
-// use set set remove duplicates
