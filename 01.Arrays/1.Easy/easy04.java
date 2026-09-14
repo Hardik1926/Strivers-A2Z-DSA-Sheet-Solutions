@@ -36,19 +36,20 @@ public class easy04 {
             if(num != 2147483647){
                 newnums[j] = num;
                 j++;
+                count++;
             }
         }
 
-        System.out.printf("No of Unique elements: %d",nums.length - count);
+        System.out.printf("No of Unique elements: %d",count);
         System.out.println();
 
         System.out.print("[");
         for(int i = 0; i < newnums.length;i++){
-            System.out.print(newnums[i] + ",");
-
             if(i == newnums.length - 1 ){
                 break;
             }
+            
+            System.out.print(newnums[i] + ",");
         }    
         System.out.println("]");   
     }
