@@ -22,30 +22,22 @@ jobs:
           cpp_count=$(find . -type f -name "*.cpp" | wc -l)
           java_count=$(find . -type f -name "*.java" | wc -l)
 
-          # C++ files represent the questions in the sheet.
-          # Java files represent the completed solutions.
-          #
-          # C++ contributes 50% of the overall progress.
-          # Java contributes the other 50%.
+          # C++ represents 50% of the final score.
+          cpp_progress=50
 
+          # Java represents the remaining 50%.
           if [ "$cpp_count" -eq 0 ]; then
-            cpp_progress=0
             java_progress=0
-            overall_progress=0
           else
-            # C++ is considered the complete question set.
-            cpp_progress=50
-
-            # Java progress represents the second 50%.
             java_progress=$((java_count * 50 / cpp_count))
-
-            # Prevent progress from going above 50%.
-            if [ "$java_progress" -gt 50 ]; then
-              java_progress=50
-            fi
-
-            overall_progress=$((cpp_progress + java_progress))
           fi
+
+          # Prevent Java progress from exceeding 50%.
+          if [ "$java_progress" -gt 50 ]; then
+            java_progress=50
+          fi
+
+          overall_progress=$((cpp_progress + java_progress))
 
           echo "C++ questions: $cpp_count"
           echo "Java solutions: $java_count"
@@ -53,20 +45,27 @@ jobs:
           echo "Java contribution: $java_progress%"
           echo "Overall progress: $overall_progress%"
 
-          python3 - <<EOF
+          export CPP_COUNT="$cpp_count"
+          export JAVA_COUNT="$java_count"
+          export CPP_PROGRESS="$cpp_progress"
+          export JAVA_PROGRESS="$java_progress"
+          export OVERALL_PROGRESS="$overall_progress"
+
+          python3 <<'PY'
+          import os
           from pathlib import Path
 
           readme = Path("README.md")
-          text = readme.read_text()
+          text = readme.read_text(encoding="utf-8")
 
           start = "<!-- PROGRESS_START -->"
           end = "<!-- PROGRESS_END -->"
 
-          cpp_count = $cpp_count
-          java_count = $java_count
-          cpp_progress = $cpp_progress
-          java_progress = $java_progress
-          overall_progress = $overall_progress
+          cpp_count = int(os.environ["CPP_COUNT"])
+          java_count = int(os.environ["JAVA_COUNT"])
+          cpp_progress = int(os.environ["CPP_PROGRESS"])
+          java_progress = int(os.environ["JAVA_PROGRESS"])
+          overall_progress = int(os.environ["OVERALL_PROGRESS"])
 
           filled = round(overall_progress / 5)
           empty = 20 - filled
@@ -75,31 +74,32 @@ jobs:
 
           progress_section = f"""<!-- PROGRESS_START -->
 
-          | Language | Status | Progress |
-          |:---:|:---|:---:|
-          | ⚡ C++ | Questions | **{{cpp_progress}}%** |
-          | ☕ Java | Solutions | **{{java_progress}}%** |
-          | 🎯 Overall | Completion | **{{overall_progress}}%** |
+          | Language | Progress |
+          |:---:|:---:|
+          | ⚡ **C++** | **{cpp_progress}%** |
+          | ☕ **Java** | **{java_progress}%** |
+          | 🎯 **Overall** | **{overall_progress}%** |
 
           ### 📈 Overall Progress
 
-          `{{progress_bar}}` **{{overall_progress}}%**
+          {progress_bar} **{overall_progress}%**
 
-          **{{java_count}} / {{cpp_count}}** Java solutions completed
+          **{java_count} / {cpp_count}** Java solutions completed
 
           <!-- PROGRESS_END -->"""
+
+          if start not in text or end not in text:
+              raise ValueError(
+                  "README.md is missing PROGRESS_START or PROGRESS_END markers."
+              )
 
           start_index = text.index(start)
           end_index = text.index(end) + len(end)
 
-          text = (
-              text[:start_index]
-              + progress_section
-              + text[end_index:]
-          )
+          text = text[:start_index] + progress_section + text[end_index:]
 
-          readme.write_text(text)
-          EOF
+          readme.write_text(text, encoding="utf-8")
+          PY
 
       - name: Commit updated README
         run: |
