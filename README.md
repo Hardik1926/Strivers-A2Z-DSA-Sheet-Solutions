@@ -50,8 +50,6 @@ Where possible, the same problem is solved in both languages to strengthen under
 
 <!-- PROGRESS_START -->
 
-### 📊 Overall Progress
-
 `░░░░░░░░░░░░░░░░░░░░` **1.63%**
 
 **6 / 369 problems solved**
