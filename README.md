@@ -56,11 +56,7 @@ Where possible, the same problem is solved in both languages to strengthen under
 
 **6 / 369 problems solved**
 
-### 📈 Overall Progress
-
-██████████░░░░░░░░░░ **50%**
-
-**6 / 369** Java solutions completed
+> Progress is updated automatically as more problems are completed.
 
 <!-- PROGRESS_END -->
 
