@@ -22,15 +22,36 @@ jobs:
           cpp_count=$(find . -type f -name "*.cpp" | wc -l)
           java_count=$(find . -type f -name "*.java" | wc -l)
 
+          # C++ files represent the questions in the sheet.
+          # Java files represent the completed solutions.
+          #
+          # C++ contributes 50% of the overall progress.
+          # Java contributes the other 50%.
+
           if [ "$cpp_count" -eq 0 ]; then
-            progress=0
+            cpp_progress=0
+            java_progress=0
+            overall_progress=0
           else
-            progress=$((java_count * 100 / cpp_count))
+            # C++ is considered the complete question set.
+            cpp_progress=50
+
+            # Java progress represents the second 50%.
+            java_progress=$((java_count * 50 / cpp_count))
+
+            # Prevent progress from going above 50%.
+            if [ "$java_progress" -gt 50 ]; then
+              java_progress=50
+            fi
+
+            overall_progress=$((cpp_progress + java_progress))
           fi
 
           echo "C++ questions: $cpp_count"
-          echo "Java answers: $java_count"
-          echo "Progress: $progress%"
+          echo "Java solutions: $java_count"
+          echo "C++ contribution: $cpp_progress%"
+          echo "Java contribution: $java_progress%"
+          echo "Overall progress: $overall_progress%"
 
           python3 - <<EOF
           from pathlib import Path
@@ -41,25 +62,41 @@ jobs:
           start = "<!-- PROGRESS_START -->"
           end = "<!-- PROGRESS_END -->"
 
+          cpp_count = $cpp_count
+          java_count = $java_count
+          cpp_progress = $cpp_progress
+          java_progress = $java_progress
+          overall_progress = $overall_progress
+
+          filled = round(overall_progress / 5)
+          empty = 20 - filled
+
+          progress_bar = "█" * filled + "░" * empty
+
           progress_section = f"""<!-- PROGRESS_START -->
 
-          | Language | Purpose | Count |
-          |----------|---------|------:|
-          | ☕ Java | Answers / Solutions | {java_count} |
-          | ⚡ C++ | Questions | {cpp_count} |
+          | Language | Status | Progress |
+          |:---:|:---|:---:|
+          | ⚡ C++ | Questions | **{{cpp_progress}}%** |
+          | ☕ Java | Solutions | **{{java_progress}}%** |
+          | 🎯 Overall | Completion | **{{overall_progress}}%** |
 
-          ### 🎯 Overall Progress
+          ### 📈 Overall Progress
 
-          **{progress}%**
+          `{{progress_bar}}` **{{overall_progress}}%**
 
-          <progress value="{progress}" max="100"></progress>
+          **{{java_count}} / {{cpp_count}}** Java solutions completed
 
           <!-- PROGRESS_END -->"""
 
           start_index = text.index(start)
           end_index = text.index(end) + len(end)
 
-          text = text[:start_index] + progress_section + text[end_index:]
+          text = (
+              text[:start_index]
+              + progress_section
+              + text[end_index:]
+          )
 
           readme.write_text(text)
           EOF
