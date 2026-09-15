@@ -72,7 +72,3 @@ These solutions represent my learning process. Some solutions may be improved or
 If you are using this repository for learning, try solving the problem yourself before looking at the solution.
 
 ---
-
-### 🚀 Final Goal
-
-**When both C++ and Java reach 50%, the Striver DSA Sheet will be fully answered.**
