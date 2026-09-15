@@ -22,25 +22,19 @@ jobs:
           cpp_count=$(find . -type f -name "*.cpp" | wc -l)
           java_count=$(find . -type f -name "*.java" | wc -l)
 
-          # C++ represents 50% of the final progress.
-          cpp_progress=50
-
-          # Java represents the other 50%.
           if [ "$cpp_count" -eq 0 ]; then
-            java_progress=0
+            progress="0.00"
           else
-            java_progress=$(awk "BEGIN {printf \"%.2f\", ($java_count / $cpp_count) * 50}")
+            progress=$(awk "BEGIN {printf \"%.2f\", ($java_count / $cpp_count) * 100}")
           fi
 
-          overall_progress=$(awk "BEGIN {printf \"%.2f\", $cpp_progress + $java_progress}")
-
-          echo "C++ questions: $cpp_count"
-          echo "Java solutions: $java_count"
-          echo "Overall progress: $overall_progress%"
+          echo "Total questions: $cpp_count"
+          echo "Problems solved: $java_count"
+          echo "Progress: $progress%"
 
           export CPP_COUNT="$cpp_count"
           export JAVA_COUNT="$java_count"
-          export OVERALL_PROGRESS="$overall_progress"
+          export PROGRESS="$progress"
 
           python3 <<'PY'
           import os
@@ -54,17 +48,20 @@ jobs:
 
           cpp_count = int(os.environ["CPP_COUNT"])
           java_count = int(os.environ["JAVA_COUNT"])
-          overall_progress = float(os.environ["OVERALL_PROGRESS"])
+          progress = float(os.environ["PROGRESS"])
+
+          filled = round(progress / 5)
+          empty = 20 - filled
+
+          progress_bar = "█" * filled + "░" * empty
 
           progress_section = f"""<!-- PROGRESS_START -->
 
           ### 📊 Overall Progress
 
-          <progress value="{overall_progress:.2f}" max="100"></progress> **{overall_progress:.2f}%**
+          `{progress_bar}` **{progress:.2f}%**
 
           **{java_count} / {cpp_count} problems solved**
-
-          > Progress is updated automatically as more problems are completed.
 
           <!-- PROGRESS_END -->"""
 

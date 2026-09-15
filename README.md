@@ -52,11 +52,9 @@ Where possible, the same problem is solved in both languages to strengthen under
 
 ### 📊 Overall Progress
 
-<progress value="50.81" max="100"></progress> **50.81%**
+`░░░░░░░░░░░░░░░░░░░░` **0.00%**
 
-**6 / 369 problems solved**
-
-> Progress is updated automatically as more problems are completed.
+**0 / 0 problems solved**
 
 <!-- PROGRESS_END -->
 
