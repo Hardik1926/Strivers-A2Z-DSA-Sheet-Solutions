@@ -56,6 +56,12 @@ Where possible, the same problem is solved in both languages to strengthen under
 | ☕ **Java** | **0%** |
 | 🎯 **Overall** | **50%** |
 
+### 📈 Overall Progress
+
+██████████░░░░░░░░░░ **50%**
+
+**6 / 369** Java solutions completed
+
 <!-- PROGRESS_END -->
 
 ## 🎯 Goals
