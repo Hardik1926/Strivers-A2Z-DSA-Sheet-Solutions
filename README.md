@@ -2,7 +2,7 @@
 
 This repository contains my solutions to the problems from **Striver's DSA Sheet**.
 
-The solutions are written in **C++** and **Java**, with the goal of improving problem-solving skills, understanding core Data Structures and Algorithms, and maintaining a structured record of my DSA practice.
+The questions are wrritten in**C++**and the solutions are written in**Java**, with the goal of improving problem-solving skills, understanding core Data Structures and Algorithms, and maintaining a structured record of my DSA practice.
 
 ## 📚 About the Repository
 
