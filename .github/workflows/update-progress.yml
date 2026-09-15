@@ -22,33 +22,24 @@ jobs:
           cpp_count=$(find . -type f -name "*.cpp" | wc -l)
           java_count=$(find . -type f -name "*.java" | wc -l)
 
-          # C++ represents 50% of the final score.
+          # C++ represents 50% of the final progress.
           cpp_progress=50
 
-          # Java represents the remaining 50%.
+          # Java represents the other 50%.
           if [ "$cpp_count" -eq 0 ]; then
             java_progress=0
           else
-            java_progress=$((java_count * 50 / cpp_count))
+            java_progress=$(awk "BEGIN {printf \"%.2f\", ($java_count / $cpp_count) * 50}")
           fi
 
-          # Prevent Java progress from exceeding 50%.
-          if [ "$java_progress" -gt 50 ]; then
-            java_progress=50
-          fi
-
-          overall_progress=$((cpp_progress + java_progress))
+          overall_progress=$(awk "BEGIN {printf \"%.2f\", $cpp_progress + $java_progress}")
 
           echo "C++ questions: $cpp_count"
           echo "Java solutions: $java_count"
-          echo "C++ contribution: $cpp_progress%"
-          echo "Java contribution: $java_progress%"
           echo "Overall progress: $overall_progress%"
 
           export CPP_COUNT="$cpp_count"
           export JAVA_COUNT="$java_count"
-          export CPP_PROGRESS="$cpp_progress"
-          export JAVA_PROGRESS="$java_progress"
           export OVERALL_PROGRESS="$overall_progress"
 
           python3 <<'PY'
@@ -63,28 +54,17 @@ jobs:
 
           cpp_count = int(os.environ["CPP_COUNT"])
           java_count = int(os.environ["JAVA_COUNT"])
-          cpp_progress = int(os.environ["CPP_PROGRESS"])
-          java_progress = int(os.environ["JAVA_PROGRESS"])
-          overall_progress = int(os.environ["OVERALL_PROGRESS"])
-
-          filled = round(overall_progress / 5)
-          empty = 20 - filled
-
-          progress_bar = "█" * filled + "░" * empty
+          overall_progress = float(os.environ["OVERALL_PROGRESS"])
 
           progress_section = f"""<!-- PROGRESS_START -->
 
-          | Language | Progress |
-          |:---:|:---:|
-          | ⚡ **C++** | **{cpp_progress}%** |
-          | ☕ **Java** | **{java_progress}%** |
-          | 🎯 **Overall** | **{overall_progress}%** |
+          ### 📊 Overall Progress
 
-          ### 📈 Overall Progress
+          <progress value="{overall_progress:.2f}" max="100"></progress> **{overall_progress:.2f}%**
 
-          {progress_bar} **{overall_progress}%**
+          **{java_count} / {cpp_count} problems solved**
 
-          **{java_count} / {cpp_count}** Java solutions completed
+          > Progress is updated automatically as more problems are completed.
 
           <!-- PROGRESS_END -->"""
 

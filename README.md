@@ -50,13 +50,14 @@ Where possible, the same problem is solved in both languages to strengthen under
 
 <!-- PROGRESS_START -->
 
-| Language | Progress |
-|:---:|:---:|
-| ⚡ **C++** | **50%** |
-| ☕ **Java** | **0%** |
-| 🎯 **Overall** | **50%** |
+### 📊 Overall Progress
+
+<progress value="50.81" max="100"></progress> **50.81%**
+
+**6 / 369 problems solved**
 
 <!-- PROGRESS_END -->
+
 
 ## 🎯 Goals
 
