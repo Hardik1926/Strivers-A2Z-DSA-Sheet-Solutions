@@ -48,13 +48,15 @@ Where possible, the same problem is solved in both languages to strengthen under
 
 ## 📈 Progress
 
-| Language | Progress |
-|----------|----------|
-| C++ | 50% |
-| Java | 50% |
-| **Overall** | **100%** |
+<!-- PROGRESS_START -->
 
-> Progress will be updated as more problems are completed.
+| Language | Progress |
+|:---:|:---:|
+| ⚡ **C++** | **50%** |
+| ☕ **Java** | **0%** |
+| 🎯 **Overall** | **50%** |
+
+<!-- PROGRESS_END -->
 
 ## 🎯 Goals
 
