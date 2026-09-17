@@ -24,6 +24,10 @@ public class easy06 {
         int dir = scan.nextInt();
         scan.close();
 
+        if(k>n){
+            k%=n;
+        }
+
         rotate(nums, n, k, dir);
         System.out.print("[");
         for(int i = 0; i < nums.length;i++){
