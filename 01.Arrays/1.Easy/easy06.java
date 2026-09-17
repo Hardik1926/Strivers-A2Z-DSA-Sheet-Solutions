@@ -39,16 +39,16 @@ public class easy06 {
         Queue<Integer> front = new LinkedList<>();
         Queue<Integer> back = new LinkedList<>();
         
-        for(int i = 0;i<n;i++){
-            if(i<n-k){
-                front.offer(nums[i]);
-            }
-            if(i>=n-k){
-                back.offer(nums[i]);
-            }
-        }
 
         if(dir == 1){
+            for(int i = 0;i<n;i++){
+                if(i<k){
+                    front.offer(nums[i]);
+                }
+                if(i>=k){
+                    back.offer(nums[i]);
+                }
+            }
             for(int i = 0; i<n ; i++){
                 if(!back.isEmpty()){
                     nums[i] = back.poll();
@@ -59,6 +59,14 @@ public class easy06 {
             }
         }
         else if(dir == 2){
+            for(int i = 0;i<n;i++){
+                if(i<n-k){
+                    front.offer(nums[i]);
+                }
+                if(i>=n-k){
+                    back.offer(nums[i]);
+                }
+            }
             for(int i = 0; i<n ; i++){
                 if(!back.isEmpty()){
                     nums[i] = back.poll();
