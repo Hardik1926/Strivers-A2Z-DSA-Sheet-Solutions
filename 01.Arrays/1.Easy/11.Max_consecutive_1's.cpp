@@ -1,23 +1,29 @@
 /*
 QUESTION:-
-Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+Given an array that contains only 1 and 0 return the count of maximum consecutive ones in the array..
 
 Example 1:
+Input: prices = {1, 1, 0, 1, 1, 1}
+Output: 3
+Explanation: There are two consecutive 1’s and three consecutive 1’s in the array out of which maximum is 3.
 
-Input: nums = [3,0,1]
-Output: 2
-Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.
 Example 2:
-
-Input: nums = [0,1]
+Input: prices = {1, 0, 1, 1, 0, 1} 
 Output: 2
-Explanation: n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.
+Explanation: There are two consecutive 1's in the array.
 */
 
 /*
-APPROACH:-
--> Traverse the entire array and within it run a loop while element's are equal to 1 and store the count
--> Update the ans as max(ans,cnt)
+We need to find the longest streak of consecutive 1’s in a binary array. A simple idea is to traverse the array while maintaining a counter. Every time we encounter a 1, we increase the counter. If we encounter a 0, the streak breaks, so we reset the counter to 0. At each step, we track the maximum streak length seen so far.
+
+Initialize two variables:
+cnt → counts the current streak of 1’s.
+maxi → stores the maximum streak found so far.
+Traverse through the array:
+If nums[i] == 1, increment cnt.
+If nums[i] == 0, reset cnt to 0.
+Update maxi = max(maxi, cnt) at each step.
+Finally, return maxi, which contains the length of the longest consecutive 1’s.
 */
 
 // CODE:-
