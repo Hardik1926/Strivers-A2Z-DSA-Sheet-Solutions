@@ -16,13 +16,15 @@ public class easy13 {
             nums[i] = x ;
         }
         scan.close();
-        once(nums, n);
+        System.out.println(once(nums, n));
     }
 
     static int once(int[] nums,int n){
         int element = 0;
-
-        for(int i =0;i<n-1;){
+        for (int num : nums) {
+            element ^=num;
+            //  ^ is a fucking XOR gate like not Or gate
+            // Fun Fact: I also did not know about it .
         }
         return element;
     }
