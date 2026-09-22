@@ -1,10 +1,9 @@
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class easy07 {
     
     public static void main(String[] args) {
+
         Scanner scan = new Scanner(System.in);
         
         System.out.print("Enter the no of elements in Array: ");
@@ -14,8 +13,8 @@ public class easy07 {
         
         for(int i = 0; i<n;i++){
             System.out.print("Enter the Elements: ");
-            int x = scan.nextInt();
-            nums[i] = x ;
+            int temp = scan.nextInt();
+            nums[i] = temp ;
         }
         scan.close();
 
@@ -32,22 +31,17 @@ public class easy07 {
     }
 
     static void endZ(int[] nums,int n){
-        Queue<Integer> q = new LinkedList<>();
-        int noZ = 0;
-        for(int i = 0;i<n;i++){
-            if(nums[i] == 0){
-                noZ++;
-            }
-            else if(nums[i] != 0){
-                q.offer(nums[i]);
-            }
-        }
-        for(int i = 0; i<n; i++){
-            if(!q.isEmpty()){
-                nums[i] = q.poll();
-            }
-            if(i>=n-noZ){
-                nums[i] = 0;
+        int temp = 1;
+        for(int i = 0; i<n-1 && temp<n; i++){
+            temp = i+1;
+            if(temp<n && nums[i] == 0){
+                if(nums[temp] == 0){
+                    temp++;
+                }
+                if(temp<n){
+                    nums[i] = nums[temp];
+                    nums[temp] = 0;
+                }   
             }
         }
     }
