@@ -40,7 +40,7 @@ public class easy04 {
     }   
 
     static int rm_dups(int[] nums){
-        Stack<Integer> temp = new Stack<Integer>();
+        Stack<Integer> temp = new Stack<>();
         int k = 0;       
         for(int i = 1; i < nums.length;i++){
             if(nums[i] != nums[i-1]){

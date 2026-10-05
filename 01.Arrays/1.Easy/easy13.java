@@ -23,8 +23,8 @@ public class easy13 {
         int element = 0;
         for (int num : nums) {
             element ^=num;
-            //  ^ is a fucking XOR gate like not Or gate
-            // Fun Fact: I also did not know about it .
+            //  ^ is a fucking XOR gate like it is a -> not Or gate
+            // Fun Fact: I also did not know about it till i looked for this questions answer.
         }
         return element;
     }

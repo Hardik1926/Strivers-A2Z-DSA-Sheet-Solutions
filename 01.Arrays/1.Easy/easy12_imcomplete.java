@@ -26,5 +26,6 @@ public class easy12_imcomplete {
     }
 
     static void sumarray(int[] A,int N,int K){
+
     }
 }
