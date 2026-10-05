@@ -52,9 +52,9 @@ Where possible, the same problem is solved in both languages to strengthen under
 
 ### 📊 Overall Progress
 
-`█░░░░░░░░░░░░░░░░░░░` **3.52%**
+`█░░░░░░░░░░░░░░░░░░░` **3.79%**
 
-**13 / 369 problems solved**
+**14 / 369 problems solved**
 
 <!-- PROGRESS_END -->
 
