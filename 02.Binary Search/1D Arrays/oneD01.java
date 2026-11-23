@@ -27,24 +27,20 @@ public class oneD01 {
         int start = 0;
         int end = nums.length - 1;
         int mid = (start+end)/2;
-        boolean bool = true;
 
-        while (bool) { 
+        while (start<=end) { 
             if(nums[mid] == k){
                 return mid;
             }
-            if(k < nums[start] | k > nums[end]){
-                break;
-            }
             if(nums[mid] > k){
-                end = mid;
+                end = mid+1;
                 mid = (start+end)/2;
             }
             if(nums[mid] < k){
-                start = mid;
+                start = mid+1;
                 mid = (start+end)/2;
             }
-        }
+        } 
         return -1;
     }
 }
